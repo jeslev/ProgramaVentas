@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">ProgramaVentas</string>
+    <string name="action_settings">Settings</string>
+    <string name="title_activity_user_option">UserOptionActivity</string>
+    <string name="title_activity_buy">BuyActivity</string>
+    <string name="title_activity_buy_product_actibity">BuyProductActibity</string>
+    <string name="title_activity_edit">EditActivity</string>
+    <string name="title_activity_edit_items">EditItems</string>
+</resources>
