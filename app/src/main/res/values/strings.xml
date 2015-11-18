@@ -6,4 +6,15 @@
     <string name="title_activity_buy_product_actibity">BuyProductActibity</string>
     <string name="title_activity_edit">EditActivity</string>
     <string name="title_activity_edit_items">EditItems</string>
+    <string name="title_activity_receipt_option">ReceiptOptionActivity</string>
+
+    <string name="hello_world">Hello world!</string>
+    <string name="title_activity_edit_receipt">EditReceiptActivity</string>
+    <string name="title_activity_buy_product_receipt">BuyProductReceiptActivity</string>
+    <string name="title_activity_add_receipt">AddReceiptActivity</string>
+    <string name="title_activity_delete_receipt">DeleteReceiptActivity</string>
+    <string name="title_activity_delete_product_receipt">DeleteProductReceiptActivity</string>
+    <string name="title_activity_pay_receipt">PayReceiptActivity</string>
+    <string name="title_activity_pay_list_receipt">PayListReceiptActivity</string>
+    <string name="title_activity_admin_option">AdminOptionActivity</string>
 </resources>

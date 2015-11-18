@@ -26,6 +26,7 @@ import java.util.List;
 
 public class BuyActivity extends ListActivity {
 
+    private static StaticVariables staticVariables = new StaticVariables();
 
     // Progress Dialog
     private ProgressDialog pDialog;
@@ -37,16 +38,17 @@ public class BuyActivity extends ListActivity {
 
     HashMap<String,Integer> productsBuying;
 
+
     // url to get all products list
-    private static String url_all_products = "http://192.168.0.3/lab3/get_all_products.php";
+    private static String url_all_products = "http://"+staticVariables.getIpServer()+"/lab3/get_all_products.php";
 
     // JSON Node names
-    private static final String TAG_SUCCESS = "success";
-    private static final String TAG_PRODUCTS = "productos";
-    private static final String TAG_PID = "id";
-    private static final String TAG_NAME = "nombre";
-    private static final String TAG_PRICE = "precio";
-    private static final String TAG_QUANT = "cant";
+    private static final String TAG_SUCCESS = staticVariables.getTagSuccess();
+    private static final String TAG_PRODUCTS = staticVariables.getTagProducts();
+    private static final String TAG_PID = staticVariables.getTagPid();
+    private static final String TAG_NAME = staticVariables.getTagName();
+    private static final String TAG_PRICE = staticVariables.getTagPrice();
+    private static final String TAG_QUANT = staticVariables.getTagQuant();
 
     // products JSONArray
     JSONArray products = null;
@@ -75,7 +77,6 @@ public class BuyActivity extends ListActivity {
         // Get listview
         ListView lv = getListView();
 
-
         final View mylayout=getLayoutInflater().inflate(R.layout.quantity, null);
 
         lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -95,7 +96,6 @@ public class BuyActivity extends ListActivity {
 
             }
         });
-
 
         btn1.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -119,7 +119,7 @@ public class BuyActivity extends ListActivity {
 
     class terminaRecibo extends AsyncTask<String, String, String> {
 
-        private  String url_terminar_recibo = "http://192.168.0.3/lab3/make_buy.php";
+        private  String url_terminar_recibo = "http://"+staticVariables.getIpServer()+"/lab3/make_buy.php";
 
         /**
          * Before starting background thread Show Progress Dialog
@@ -245,6 +245,7 @@ public class BuyActivity extends ListActivity {
 
                         // adding each child node to HashMap key => value
                         map.put(TAG_PID, id);
+                        //map.put(TAG_PID, "5");
                         map.put(TAG_NAME, name);
                         map.put(TAG_PRICE, price);
                         map.put(TAG_QUANT, quant);

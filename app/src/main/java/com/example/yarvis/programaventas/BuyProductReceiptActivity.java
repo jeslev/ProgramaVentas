@@ -3,9 +3,11 @@ package com.example.yarvis.programaventas;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.AsyncTask;
-import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -21,7 +23,7 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
-public class BuyProductActibity extends AppCompatActivity {
+public class BuyProductReceiptActivity extends AppCompatActivity {
 
     ProgressDialog pDialog;
 
@@ -41,14 +43,15 @@ public class BuyProductActibity extends AppCompatActivity {
     private static final String TAG_PRICE = staticVariables.getTagPrice();
     private static final String TAG_QUANT = staticVariables.getTagQuant();
 
-    String pid;
+    String pid, rid;
     int uid, maxqnt,valqnt;
     JSONParser jParser = new JSONParser();
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_buy_product_actibity);
+        setContentView(R.layout.activity_buy_product_receipt);
 
         txtItem = (TextView) findViewById(R.id.efname);
         txtPrice = (TextView) findViewById(R.id.efprice);
@@ -65,10 +68,12 @@ public class BuyProductActibity extends AppCompatActivity {
 
         // getting product id (pid) from intent
         pid = i.getStringExtra(TAG_PID);
+        rid = i.getStringExtra("ReceiptID");
         uid = i.getIntExtra("UserID", 0);
 
-        //System.err.println("PID" + pid);
-        //System.err.println("UID" + uid);
+        System.err.println("PID" + pid);
+        System.err.println("RID" + rid);
+        System.err.println("UID" + uid);
 
         maxqnt = 0;
 
@@ -82,7 +87,7 @@ public class BuyProductActibity extends AppCompatActivity {
 
                 String qntity = qnt.getText().toString();
                 valqnt = new Integer(qntity).intValue();
-                Log.d("String: ", pid+" "+qntity);
+                Log.d("String: ", pid + " " + qntity);
 
                 //revisa si cantidad es menor que maximo
                 if(valqnt>maxqnt || valqnt<1){
@@ -100,16 +105,38 @@ public class BuyProductActibity extends AppCompatActivity {
         });
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.menu_buy_product_receipt, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        int id = item.getItemId();
+
+        //noinspection SimplifiableIfStatement
+        if (id == R.id.action_settings) {
+            return true;
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+
     class addToBuy extends AsyncTask<String, String, String> {
 
-        private String url_add_product= "http://"+staticVariables.getIpServer()+"/lab3/create_product.php";
+        private String url_add_product= "http://"+staticVariables.getIpServer()+"/lab3/create_product_receipt.php";
         /**
          * Before starting background thread Show Progress Dialog
          * */
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            pDialog = new ProgressDialog(BuyProductActibity.this);
+            pDialog = new ProgressDialog(BuyProductReceiptActivity.this);
             pDialog.setMessage("Agregando producto..");
             pDialog.setIndeterminate(false);
             pDialog.setCancelable(true);
@@ -124,7 +151,7 @@ public class BuyProductActibity extends AppCompatActivity {
             // Building Parameters
             List<NameValuePair> params = new ArrayList<NameValuePair>();
             params.add(new BasicNameValuePair("pid", pid));
-            params.add(new BasicNameValuePair("uid", ""+uid));
+            params.add(new BasicNameValuePair("rid", ""+rid));
             params.add(new BasicNameValuePair("qnty", ""+valqnt));
             Log.e("String: ", pid);
             // getting JSON Object
@@ -173,7 +200,7 @@ public class BuyProductActibity extends AppCompatActivity {
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            pDialog = new ProgressDialog(BuyProductActibity.this);
+            pDialog = new ProgressDialog(BuyProductReceiptActivity.this);
             pDialog.setMessage("Consultando datos..");
             pDialog.setIndeterminate(false);
             pDialog.setCancelable(true);

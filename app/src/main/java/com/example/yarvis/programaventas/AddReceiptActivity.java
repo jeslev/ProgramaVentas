@@ -6,6 +6,8 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
@@ -24,7 +26,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-public class EditItems extends ListActivity {
+public class AddReceiptActivity extends ListActivity {
 
     private static StaticVariables staticVariables = new StaticVariables();
 
@@ -38,45 +40,49 @@ public class EditItems extends ListActivity {
 
     HashMap<String,Integer> productsBuying;
 
+
     // url to get all products list
-    private static String url_all_products = "http://"+staticVariables.getIpServer()+"/lab3/get_all_my_buys.php";
+    private static String url_all_products = "http://"+staticVariables.getIpServer()+"/lab3/get_all_products.php";
 
     // JSON Node names
-    private static final String TAG_SUCCESS = "success";
-    private static final String TAG_PRODUCTS = "product";
-    private static final String TAG_PID = "id";
-    private static final String TAG_NAME = "nombre";
-    private static final String TAG_PRICE = "precio";
-    private static final String TAG_QUANT = "cant";
+    private static final String TAG_SUCCESS = staticVariables.getTagSuccess();
+    private static final String TAG_PRODUCTS = staticVariables.getTagProducts();
+    private static final String TAG_PID = staticVariables.getTagPid();
+    private static final String TAG_NAME = staticVariables.getTagName();
+    private static final String TAG_PRICE = staticVariables.getTagPrice();
+    private static final String TAG_QUANT = staticVariables.getTagQuant();
 
     // products JSONArray
     JSONArray products = null;
 
-    public Button btn1;
-    public Button btn2;
+    public Button btnFinish;
 
-    int uid, ridd;
+    int uid;
     String rid;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_edit_items);
+        setContentView(R.layout.activity_add_receipt);
 
-        btn1 = (Button) findViewById(R.id.button);
-        btn2 = (Button) findViewById(R.id.button2);
+        btnFinish = (Button) findViewById(R.id.button);
         // Hashmap for ListView
         productsList = new ArrayList<HashMap<String, String>>();
 
+
         Intent intent = getIntent();
         uid = intent.getIntExtra("UserID",0);
-        rid = intent.getStringExtra("ReciboID");
-        ridd = new Integer(rid).intValue();
-
+        rid = intent.getStringExtra(TAG_PID);
         productsBuying = new HashMap<String,Integer>();
+        System.err.println("Datos: "+uid + "-" + rid);
         // Loading products in Background Thread
-        new listAllBuys().execute();
+        new LoadAllProducts().execute();
 
+        // Get listview
         ListView lv = getListView();
+
+
+        final View mylayout=getLayoutInflater().inflate(R.layout.quantity, null);
 
         lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -86,26 +92,54 @@ public class EditItems extends ListActivity {
                 String pid = ((TextView) view.findViewById(R.id.pid)).getText().toString();
 
                 // Starting new intent
-                Intent in = new Intent(getApplicationContext(),	ReceiptOptionActivity.class);
+                Intent in = new Intent(getApplicationContext(), BuyProductReceiptActivity.class);
                 // sending pid to next activity
                 in.putExtra(TAG_PID, pid);
-                in.putExtra("UserID",uid);
+                in.putExtra("UserID", uid);
+                in.putExtra("ReceiptID", rid);
 
                 startActivity(in);
 
             }
         });
 
-        btn2.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
 
+        btnFinish.setOnClickListener(
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        finish();
+                    }
+                }
+        );
     }
 
-    class listAllBuys extends AsyncTask<String, String, String> {
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.menu_add_receipt, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        int id = item.getItemId();
+
+        //noinspection SimplifiableIfStatement
+        if (id == R.id.action_settings) {
+            return true;
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+
+    /**
+     * Background Async Task to Load all product by making HTTP Request
+     * */
+    class LoadAllProducts extends AsyncTask<String, String, String> {
 
         /**
          * Before starting background thread Show Progress Dialog
@@ -113,7 +147,7 @@ public class EditItems extends ListActivity {
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            pDialog = new ProgressDialog(EditItems.this);
+            pDialog = new ProgressDialog(AddReceiptActivity.this);
             pDialog.setMessage("Cargando productos...");
             pDialog.setIndeterminate(false);
             pDialog.setCancelable(false);
@@ -126,12 +160,13 @@ public class EditItems extends ListActivity {
         protected String doInBackground(String... args) {
             // Building Parameters
             List<NameValuePair> params = new ArrayList<NameValuePair>();
-            params.add(new BasicNameValuePair("uid", ""+uid));
+            params.add(new BasicNameValuePair("idr", ""+rid));
+            System.err.println("Valor: "+rid);
             // getting JSON string from URL
             JSONObject json = jParser.makeHttpRequest(url_all_products, "GET", params);
 
             // Check your log cat for JSON reponse
-            Log.d("All Buys: ", json.toString());
+            Log.d("Receipt All Products: ", json.toString());
 
             try {
                 // Checking for SUCCESS TAG
@@ -148,12 +183,19 @@ public class EditItems extends ListActivity {
 
                         // Storing each json item in variable
                         String id = c.getString(TAG_PID);
+                        String name = c.getString(TAG_NAME);
+                        String price = c.getString(TAG_PRICE);
+                        String quant = c.getString(TAG_QUANT);
                         // creating new HashMap
                         HashMap<String, String> map = new HashMap<String, String>();
 
                         // adding each child node to HashMap key => value
                         map.put(TAG_PID, id);
-                        map.put(TAG_NAME, "Recibo "+id);
+                        //map.put(TAG_PID, "5");
+                        map.put(TAG_NAME, name);
+                        map.put(TAG_PRICE, price);
+                        map.put(TAG_QUANT, quant);
+
                         // adding HashList to ArrayList
                         productsList.add(map);
                     }
@@ -180,10 +222,10 @@ public class EditItems extends ListActivity {
                      * Updating parsed JSON data into ListView
                      * */
                     ListAdapter adapter = new SimpleAdapter(
-                            EditItems.this, productsList,
-                            R.layout.list_item2, new String[] { TAG_PID,
-                            TAG_NAME},
-                            new int[] { R.id.pid, R.id.name });
+                            AddReceiptActivity.this, productsList,
+                            R.layout.list_item, new String[] { TAG_PID,
+                            TAG_NAME, TAG_PRICE, TAG_QUANT},
+                            new int[] { R.id.pid, R.id.name, R.id.price, R.id.cant });
                     // updating listview
                     setListAdapter(adapter);
                 }
@@ -192,5 +234,4 @@ public class EditItems extends ListActivity {
         }
 
     }
-
 }

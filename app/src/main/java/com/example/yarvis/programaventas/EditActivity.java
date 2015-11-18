@@ -26,6 +26,8 @@ import java.util.List;
 
 public class EditActivity extends ListActivity {
 
+    private static StaticVariables staticVariables = new StaticVariables();
+
     // Progress Dialog
     private ProgressDialog pDialog;
 
@@ -37,7 +39,7 @@ public class EditActivity extends ListActivity {
     HashMap<String,Integer> productsBuying;
 
     // url to get all products list
-    private static String url_all_products = "http://192.168.0.3/lab3/get_all_my_buys.php";
+    private static String url_all_products = "http://"+staticVariables.getIpServer()+"/lab3/get_all_my_buys.php";
 
     // JSON Node names
     private static final String TAG_SUCCESS = "success";
@@ -81,9 +83,10 @@ public class EditActivity extends ListActivity {
                String pid = ((TextView) view.findViewById(R.id.pid)).getText().toString();
 
                // Starting new intent
-               Intent in = new Intent(getApplicationContext(),	EditItems.class);
+               Intent in = new Intent(getApplicationContext(),	ReceiptOptionActivity.class);
                // sending pid to next activity
-               in.putExtra("ReciboID", pid);
+               //maritzain.putExtra("ReciboID", id);
+               in.putExtra(TAG_PID, pid);
                in.putExtra("UserID",uid);
 
                startActivity(in);
@@ -139,6 +142,7 @@ public class EditActivity extends ListActivity {
                     products = json.getJSONArray(TAG_PRODUCTS);
 
                     // looping through All Products
+                    System.err.println("Texto: " + products.length());
                     for (int i = 0; i < products.length(); i++) {
                         JSONObject c = products.getJSONObject(i);
 

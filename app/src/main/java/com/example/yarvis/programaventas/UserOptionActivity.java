@@ -45,7 +45,14 @@ public class UserOptionActivity extends AppCompatActivity {
             }
         });
 
-
+        btnPagar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(getApplicationContext(), PayListReceiptActivity.class);
+                i.putExtra("UserID",uid);
+                startActivity(i);
+            }
+        });
 
         btnSalir.setOnClickListener(new View.OnClickListener() {
             @Override

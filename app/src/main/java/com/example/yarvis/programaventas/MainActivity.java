@@ -8,8 +8,6 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ListAdapter;
-import android.widget.SimpleAdapter;
 
 import org.apache.http.NameValuePair;
 import org.apache.http.message.BasicNameValuePair;
@@ -26,14 +24,15 @@ public class MainActivity extends AppCompatActivity {
     EditText inputUser;
     EditText inputPassword;
     private ProgressDialog pDialog;
+    private static StaticVariables staticVariables = new StaticVariables();
 
     JSONParser jParser = new JSONParser();
     // JSON Node names
     private static final String TAG_SUCCESS = "success";
 
     ArrayList<HashMap<String, String>> usersList;
+    private static String url_validate_user= "http://"+staticVariables.getIpServer()+"/lab3/login.php";
 
-    private static String url_validate_user= "http://192.168.0.3/lab3/login.php";
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -44,7 +43,6 @@ public class MainActivity extends AppCompatActivity {
         // Edit Text
         inputUser = (EditText) findViewById(R.id.inputUser);
         inputPassword = (EditText) findViewById(R.id.inputPassword);
-
         btnLogin.setOnClickListener(new View.OnClickListener() {
 
             @Override
@@ -75,14 +73,14 @@ public class MainActivity extends AppCompatActivity {
          * Creating product
          * */
         protected String doInBackground(String... args) {
+            System.err.println("antes");
             String user = inputUser.getText().toString();
             String psswd = inputPassword.getText().toString();
-
+            System.err.println("despues");
             // Building Parameters
             List<NameValuePair> params = new ArrayList<NameValuePair>();
             params.add(new BasicNameValuePair("user", user));
             params.add(new BasicNameValuePair("password", psswd));
-
             // getting JSON Object
             // Note that create product url accepts POST method
             JSONObject json = jParser.makeHttpRequest(url_validate_user,"POST", params);
@@ -96,11 +94,18 @@ public class MainActivity extends AppCompatActivity {
 
                 if (success == 1) {
                     int uid = json.getInt("uid");
-                    // successfully validated login
-                    Intent i = new Intent(getApplicationContext(), UserOptionActivity.class);
-                    i.putExtra("UserID", uid);
-                    startActivity(i);
-
+                    if(uid==2){
+                        // successfully validated login
+                        Intent i = new Intent(getApplicationContext(), AdminOptionActivity.class);
+                        i.putExtra("UserID", uid);
+                        startActivity(i);
+                    }
+                    else {
+                        // successfully validated login
+                        Intent i = new Intent(getApplicationContext(), UserOptionActivity.class);
+                        i.putExtra("UserID", uid);
+                        startActivity(i);
+                    }
                     // closing this screen
                     finish();
                 } else {

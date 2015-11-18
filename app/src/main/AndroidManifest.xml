@@ -47,6 +47,42 @@
             android:label="@string/title_activity_edit_items"
             android:theme="@style/AppTheme.NoActionBar" >
         </activity>
+        <activity
+            android:name=".ReceiptOptionActivity"
+            android:label="@string/title_activity_receipt_option" >
+        </activity>
+        <activity
+            android:name=".EditReceiptActivity"
+            android:label="@string/title_activity_edit_receipt" >
+        </activity>
+        <activity
+            android:name=".BuyProductReceiptActivity"
+            android:label="@string/title_activity_buy_product_receipt" >
+        </activity>
+        <activity
+            android:name=".AddReceiptActivity"
+            android:label="@string/title_activity_add_receipt" >
+        </activity>
+        <activity
+            android:name=".DeleteReceiptActivity"
+            android:label="@string/title_activity_delete_receipt" >
+        </activity>
+        <activity
+            android:name=".DeleteProductReceiptActivity"
+            android:label="@string/title_activity_delete_product_receipt" >
+        </activity>
+        <activity
+            android:name=".PayReceiptActivity"
+            android:label="@string/title_activity_pay_receipt" >
+        </activity>
+        <activity
+            android:name=".PayListReceiptActivity"
+            android:label="@string/title_activity_pay_list_receipt" >
+        </activity>
+        <activity
+            android:name=".AdminOptionActivity"
+            android:label="@string/title_activity_admin_option" >
+        </activity>
     </application>
 
 </manifest>

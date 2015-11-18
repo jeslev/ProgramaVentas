@@ -2,39 +2,46 @@
 <items version="2" >
 
     <item
-        jar="/home/yarvis/Dropbox/UNI/ConcurrenteDistribuido/Lab3/ProgramaVentas/app/build/intermediates/exploded-aar/com.android.support/support-v4/23.0.1/jars/libs/internal_impl-23.0.1.jar"
+        jar="/home/noa/Desktop/ProgramaVentas/app/build/intermediates/exploded-aar/com.android.support/support-v4/23.0.1/jars/libs/internal_impl-23.0.1.jar"
         jumboMode="false"
         revision="23.0.1"
         sha1="aa92916125166649d8ad4ba3940c3dd7515596d3">
-        <dex dex="/home/yarvis/Dropbox/UNI/ConcurrenteDistribuido/Lab3/ProgramaVentas/app/build/intermediates/pre-dexed/debug/internal_impl-23.0.1-a92045196d0c1a767909434ff3c4b3b2025e6b65.jar" />
+        <dex dex="/home/noa/Desktop/ProgramaVentas/app/build/intermediates/pre-dexed/debug/internal_impl-23.0.1-b0a2911ffabae84a31081ea74eda401e0d97b7ce.jar" />
     </item>
     <item
-        jar="/home/yarvis/Android/Sdk/extras/android/m2repository/com/android/support/support-annotations/23.0.1/support-annotations-23.0.1.jar"
-        jumboMode="false"
-        revision="23.0.1"
-        sha1="1fce89a6428c51467090d7f424e4c9c3dbd55f7e">
-        <dex dex="/home/yarvis/Dropbox/UNI/ConcurrenteDistribuido/Lab3/ProgramaVentas/app/build/intermediates/pre-dexed/debug/support-annotations-23.0.1-007cf587556980eabce40bb298147aad5966974d.jar" />
-    </item>
-    <item
-        jar="/home/yarvis/Dropbox/UNI/ConcurrenteDistribuido/Lab3/ProgramaVentas/app/build/intermediates/exploded-aar/com.android.support/design/23.0.1/jars/classes.jar"
+        jar="/home/noa/Desktop/ProgramaVentas/app/build/intermediates/exploded-aar/com.android.support/design/23.0.1/jars/classes.jar"
         jumboMode="false"
         revision="23.0.1"
         sha1="e5c61a3169221a89654ffcaaed47bba51cf071ad">
-        <dex dex="/home/yarvis/Dropbox/UNI/ConcurrenteDistribuido/Lab3/ProgramaVentas/app/build/intermediates/pre-dexed/debug/classes-a3c2150ce7b9581d26c3e9a45ad511e89ee937a1.jar" />
+        <dex dex="/home/noa/Desktop/ProgramaVentas/app/build/intermediates/pre-dexed/debug/classes-7b5ecefe82d22ddedf61b1a5b68ae0d1ce661bbe.jar" />
     </item>
     <item
-        jar="/home/yarvis/Dropbox/UNI/ConcurrenteDistribuido/Lab3/ProgramaVentas/app/build/intermediates/exploded-aar/com.android.support/support-v4/23.0.1/jars/classes.jar"
+        jar="/home/noa/Desktop/ProgramaVentas/app/build/intermediates/exploded-aar/com.android.support/support-v4/23.0.1/jars/classes.jar"
         jumboMode="false"
         revision="23.0.1"
         sha1="c31e21b53ff2f74664e498248d01453a32e32d48">
-        <dex dex="/home/yarvis/Dropbox/UNI/ConcurrenteDistribuido/Lab3/ProgramaVentas/app/build/intermediates/pre-dexed/debug/classes-cfc2d6ca0595898932d500c578b77f3b314af52a.jar" />
+        <dex dex="/home/noa/Desktop/ProgramaVentas/app/build/intermediates/pre-dexed/debug/classes-1099ce1196c946a2a1f75b7bdd0ba77ef2fb0729.jar" />
     </item>
     <item
-        jar="/home/yarvis/Dropbox/UNI/ConcurrenteDistribuido/Lab3/ProgramaVentas/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.0.1/jars/classes.jar"
+        jar="/home/noa/Desktop/ProgramaVentas/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.0.1/jars/classes.jar"
         jumboMode="false"
         revision="23.0.1"
         sha1="d86429b0f0b3f3cafbeb78dda1b9d89119ccb05d">
-        <dex dex="/home/yarvis/Dropbox/UNI/ConcurrenteDistribuido/Lab3/ProgramaVentas/app/build/intermediates/pre-dexed/debug/classes-1173337a08cb234ce38e858cf1256b95b785cc6f.jar" />
+        <dex dex="/home/noa/Desktop/ProgramaVentas/app/build/intermediates/pre-dexed/debug/classes-00ac275aa6e376130747f54b4ef2586dbc95e29e.jar" />
+    </item>
+    <item
+        jar="/home/noa/Desktop/ProgramaVentas/app/libs/org.apache.http.legacy.jar"
+        jumboMode="false"
+        revision="23.0.1"
+        sha1="fa331331b626ee78c52bea16ce1e34b39e666ce5">
+        <dex dex="/home/noa/Desktop/ProgramaVentas/app/build/intermediates/pre-dexed/debug/org.apache.http.legacy-958d4879bdd3acc5f775f011eef5008262ce1544.jar" />
+    </item>
+    <item
+        jar="/home/noa/Android/Sdk/extras/android/m2repository/com/android/support/support-annotations/23.0.1/support-annotations-23.0.1.jar"
+        jumboMode="false"
+        revision="23.0.1"
+        sha1="1fce89a6428c51467090d7f424e4c9c3dbd55f7e">
+        <dex dex="/home/noa/Desktop/ProgramaVentas/app/build/intermediates/pre-dexed/debug/support-annotations-23.0.1-041a1418fe6de26f03569470a683aedbd7aa6097.jar" />
     </item>
 
 </items>

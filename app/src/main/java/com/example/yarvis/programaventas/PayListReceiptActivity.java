@@ -24,7 +24,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-public class EditItems extends ListActivity {
+public class PayListReceiptActivity extends ListActivity {
 
     private static StaticVariables staticVariables = new StaticVariables();
 
@@ -53,28 +53,25 @@ public class EditItems extends ListActivity {
     JSONArray products = null;
 
     public Button btn1;
-    public Button btn2;
 
-    int uid, ridd;
-    String rid;
+    int uid;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_edit_items);
+        setContentView(R.layout.activity_pay_list_receipt);
 
         btn1 = (Button) findViewById(R.id.button);
-        btn2 = (Button) findViewById(R.id.button2);
+
         // Hashmap for ListView
         productsList = new ArrayList<HashMap<String, String>>();
 
+
         Intent intent = getIntent();
         uid = intent.getIntExtra("UserID",0);
-        rid = intent.getStringExtra("ReciboID");
-        ridd = new Integer(rid).intValue();
-
         productsBuying = new HashMap<String,Integer>();
         // Loading products in Background Thread
-        new listAllBuys().execute();
+        new LoadAllBuys().execute();
 
         ListView lv = getListView();
 
@@ -86,8 +83,9 @@ public class EditItems extends ListActivity {
                 String pid = ((TextView) view.findViewById(R.id.pid)).getText().toString();
 
                 // Starting new intent
-                Intent in = new Intent(getApplicationContext(),	ReceiptOptionActivity.class);
+                Intent in = new Intent(getApplicationContext(),	PayReceiptActivity.class);
                 // sending pid to next activity
+                //maritzain.putExtra("ReciboID", id);
                 in.putExtra(TAG_PID, pid);
                 in.putExtra("UserID",uid);
 
@@ -96,16 +94,42 @@ public class EditItems extends ListActivity {
             }
         });
 
-        btn2.setOnClickListener(new View.OnClickListener() {
+        btn1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 finish();
             }
         });
-
     }
 
-    class listAllBuys extends AsyncTask<String, String, String> {
+
+    /*
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.menu_pay_list_receipt, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        int id = item.getItemId();
+
+        //noinspection SimplifiableIfStatement
+        if (id == R.id.action_settings) {
+            return true;
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+    */
+    /**
+     * Background Async Task to Load all product by making HTTP Request
+     * */
+    class LoadAllBuys extends AsyncTask<String, String, String> {
 
         /**
          * Before starting background thread Show Progress Dialog
@@ -113,8 +137,8 @@ public class EditItems extends ListActivity {
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            pDialog = new ProgressDialog(EditItems.this);
-            pDialog.setMessage("Cargando productos...");
+            pDialog = new ProgressDialog(PayListReceiptActivity.this);
+            pDialog.setMessage("Cargando recibos...");
             pDialog.setIndeterminate(false);
             pDialog.setCancelable(false);
             pDialog.show();
@@ -143,6 +167,7 @@ public class EditItems extends ListActivity {
                     products = json.getJSONArray(TAG_PRODUCTS);
 
                     // looping through All Products
+                    System.err.println("Texto: " + products.length());
                     for (int i = 0; i < products.length(); i++) {
                         JSONObject c = products.getJSONObject(i);
 
@@ -180,7 +205,7 @@ public class EditItems extends ListActivity {
                      * Updating parsed JSON data into ListView
                      * */
                     ListAdapter adapter = new SimpleAdapter(
-                            EditItems.this, productsList,
+                            PayListReceiptActivity.this, productsList,
                             R.layout.list_item2, new String[] { TAG_PID,
                             TAG_NAME},
                             new int[] { R.id.pid, R.id.name });
@@ -192,5 +217,4 @@ public class EditItems extends ListActivity {
         }
 
     }
-
 }
